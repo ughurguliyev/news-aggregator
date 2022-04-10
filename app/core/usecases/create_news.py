@@ -2,6 +2,10 @@ from stories import Success, Failure, Result, story, arguments
 
 
 class CreateTrendingNews:
+    """
+        Creating and updating trending news 
+        using Google trends
+    """
     @story
     @arguments("url", "pn")
     def apply(I):

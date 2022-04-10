@@ -67,7 +67,7 @@ services:
     container_name: celery
     build: .
     restart: "always"
-    command: celery --app=app.celery:app worker -B --loglevel=DEBUG --uid=nobody --gid=nogroup -E
+    command: celery --app=app.celery:app worker -B --loglevel=DEBUG
     env_file: .env
     volumes:
       - ./app:/code:rw

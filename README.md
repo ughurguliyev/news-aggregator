@@ -32,11 +32,15 @@ $ python3 manage.py runserver
 - Every business logic lives under the usecases folders.
 - You can simply understand the purpose of the specific usecase by looking its name or description in the class.
 - Usecases implemented using profit404/stories ("https://github.com/proofit404/stories") library.
-- Celery & Redis used to create and update news in every 1 min.
 
 ### Repositories
 - Every db related actions are stored in the repository. 
 - Do not use querysets and db related actions outside of the repository.
 
-
-
+### Celery
+- For running tasks in background, Celery is used.
+- Celery is used to create and update news in every 1 min.
+- For running task in development, run this command inside the app folder:
+```bash
+$ celery --app=app.celery:app worker -B --loglevel=DEBUG 
+```

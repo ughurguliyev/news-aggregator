@@ -34,16 +34,17 @@ class Repository:
         trends_arr: list, 
         ) -> None:
         for article in data.articles_dicts:
-            is_trend, trend_name = self.check_trends(article['description'], trends_arr)
             is_news_created = self.is_news_created(article['link'])
 
-            if is_trend and is_news_created is False:
-                news = News.objects.create(
-                    headline=article['title'],
-                    source_url=article['link'],
-                    publication_date=article['pub_date'],
-                    trend_name=trend_name,
-                )
+            if is_news_created is False:
+                is_trend, trend_name = self.check_trends(article['description'], trends_arr)
+                if is_trend:
+                    news = News.objects.create(
+                        headline=article['title'],
+                        source_url=article['link'],
+                        publication_date=article['pub_date'],
+                        trend_name=trend_name,
+                    )
     
     def get_news(self):
         return News.objects.order_by('-publication_date')

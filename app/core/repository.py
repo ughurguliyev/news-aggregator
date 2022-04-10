@@ -1,3 +1,4 @@
+import unicodedata
 from pytrends.request import TrendReq
 
 from app.utils.rss import ReadRss
@@ -22,8 +23,9 @@ class Repository:
     
     def check_trends(self, description: str, trends_arr: list) -> None:
         for trend in trends_arr:
-            if trend[0].lower() in description.lower():
-                return (True, trend)
+            trend_name = unicodedata.normalize("NFKD", trend[0])
+            if trend_name.lower() in description.lower():
+                return (True, trend_name)
         return (False, None)
         
     def create_bulk_news(
@@ -32,7 +34,7 @@ class Repository:
         trends_arr: list, 
         ) -> None:
         for article in data.articles_dicts:
-            is_trend, trend = self.check_trends(article['description'], trends_arr)
+            is_trend, trend_name = self.check_trends(article['description'], trends_arr)
             is_news_created = self.is_news_created(article['link'])
 
             if is_trend and is_news_created is False:
@@ -40,7 +42,7 @@ class Repository:
                     headline=article['title'],
                     source_url=article['link'],
                     publication_date=article['pub_date'],
-                    trend_name=trend[0],
+                    trend_name=trend_name,
                 )
     
     def get_news(self):

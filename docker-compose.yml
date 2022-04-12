@@ -8,7 +8,6 @@ services:
     restart: "always"
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./_nginx/vhost/:/etc/nginx/vhost.d:rw
@@ -45,7 +44,7 @@ services:
     restart: "always"
     environment:
       - HTTP_PORT=8000
-      - VIRTUAL_HOST=localhost
+      - VIRTUAL_HOST=46.101.220.239
       - STATS_PORT=8001
       - LANG=C.UTF-8
       - LANG=en_US.UTF-8

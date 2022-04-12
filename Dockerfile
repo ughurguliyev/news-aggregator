@@ -22,8 +22,5 @@ COPY uwsgi.ini /conf/uwsgi.ini
 # uWSGI will listen on this port
 EXPOSE 8000
 
-# Call collectstatic (customize the following line with the minimal environment variables needed for manage.py to run):
-RUN if [ -f manage.py ]; then python manage.py collectstatic --noinput; fi
-
 # Start uWSGI
 CMD [ "uwsgi", "--ini", "/conf/uwsgi.ini"]

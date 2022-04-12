@@ -7,7 +7,7 @@ class CreateTrendingNews:
         using Google trends
     """
     @story
-    @arguments("url", "pn")
+    @arguments("url", "geo")
     def apply(I):
         I.validate_inputs
         I.fetch_trends
@@ -21,7 +21,7 @@ class CreateTrendingNews:
         return Failure(reason="url_required")
     
     def fetch_trends(self, ctx):
-        ctx.trends = self.repo.fetch_trends(ctx.pn)
+        ctx.trends = self.repo.fetch_last_7_days_trends(ctx.geo)
         return Success()
         
     def fetch_news(self, ctx):

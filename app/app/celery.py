@@ -26,6 +26,6 @@ app.conf.beat_schedule = {
     "create_trending_news" : {
         "task" : "core.tasks.create_trending_news_task",
         "schedule" : crontab(),
-        "kwargs": {'url': 'https://www.segodnya.ua/xml/rss', 'pn': 'ukraine'}
+        "kwargs": {'url': 'https://www.segodnya.ua/xml/rss', 'geo': 'UA'}
     }
 }

@@ -1,16 +1,30 @@
-import unicodedata
-from pytrends.request import TrendReq
+import unicodedata, requests, json
+from datetime import datetime, timedelta
 
 from app.utils.rss import ReadRss
 from core.models import News
 
 
-class Repository:
-    def fetch_trends(self, pn: str) -> None:
-        pytrends = TrendReq(hl='uk-UA', tz=360)
-        trends_arr = pytrends.trending_searches(pn=pn).values
-        return trends_arr
+class Repository:    
+    def fetch_cleaned_data(self, url: str) -> None:
+        fetched_data = requests.get(url).text[6::]
+        cleaned_data = json.loads(fetched_data)
+
+        return cleaned_data
     
+    def fetch_last_7_days_trends(self, geo: str):
+        data_arr = []
+
+        for i in range(8):
+            date = datetime.now() - timedelta(days=i)
+            date = date.strftime('%Y%m%d')
+            data = self.fetch_cleaned_data(f'https://trends.google.com/trends/api/dailytrends?hl=en&ed={date}&geo={geo}')
+
+            for item in data["default"]["trendingSearchesDays"][0]["trendingSearches"]:
+                data_arr.append(item["title"]["query"])
+            
+        return data_arr
+
     def fetch_news(self, url: str) -> None:
         data = ReadRss(url)
         return data
@@ -23,7 +37,7 @@ class Repository:
     
     def check_trends(self, description: str, trends_arr: list) -> None:
         for trend in trends_arr:
-            trend_name = unicodedata.normalize("NFKD", trend[0])
+            trend_name = unicodedata.normalize("NFKD", trend)
             if trend_name.lower() in description.lower():
                 return (True, trend_name)
         return (False, None)

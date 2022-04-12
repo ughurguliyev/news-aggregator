@@ -1,16 +1,12 @@
-import random
-from django.contrib.auth import get_user_model
-from celery import Celery, shared_task
-from celery.schedules import crontab
-from datetime import date, timedelta 
+from celery import Celery
 
 from core.implemented import create_trending_news
 
 app = Celery()
 
 @app.task 
-def create_trending_news_task(url, pn):
+def create_trending_news_task(url, geo):
     r = create_trending_news.apply.run(
         url=url,
-        pn=pn
+        geo=geo
     )

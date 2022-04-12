@@ -7,7 +7,7 @@ class TestTrendingNews(TestCase):
     def setUp(self):
         self.created_news = create_trending_news.apply.run(
             url="https://www.segodnya.ua/xml/rss",
-            pn="ukraine"
+            geo="UA"
         )
     
     def test_created_news(self):

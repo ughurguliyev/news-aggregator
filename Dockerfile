@@ -24,3 +24,4 @@ EXPOSE 8000
 
 # Start uWSGI
 CMD [ "uwsgi", "--ini", "/conf/uwsgi.ini"]
+

@@ -42,25 +42,26 @@ services:
     container_name: app
     build: .
     restart: "always"
+    env_file: .env
     environment:
-      - HTTP_PORT=8000
-      - VIRTUAL_HOST=46.101.220.239
+      - VIRTUAL_HOST=165.22.83.150
+      - VIRTUAL_PORT=8015
+      - HTTP_PORT=8015
+      - DEBUG=True
       - STATS_PORT=8001
       - LANG=C.UTF-8
       - LANG=en_US.UTF-8
       - LANGUAGE=en_US:en
       - LC_ALL=en_US.UTF-8
-    env_file: .env
     volumes:
-      - ./app:/code:rw
-      - ./conf:/conf:rw
-    ports:
-      - "8015:8000"
+      - ./app:/code
+      - ./uwsgi.ini:/conf/uwsgi.ini
     links:
-      - redis
       - postgres
     depends_on:
-      - "postgres"
+      - postgres
+    ports:
+      - "8015:8015"
 
   celery:
     container_name: celery

@@ -5,7 +5,12 @@ class ReadRss:
     """
         Read Rss from given source
     """
-    headers = {"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"}
+    headers = {
+        "Cookie": "__cf_bm=9p8aqTL_yLYxRe3E6mvwiAODHkzGpfqWZMV3QIn5nUs-1649841442-0-AfBF6eSjtXLE0gEicq9P47Mg+hW7ayhWo25d5MVvDOnn2TB/kCnBZnS3qRUTIOZA8xxZ2LDCxJjLMJrBHZ4Z6QM=",
+        "User-Agent":"Mozilla/5.0",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+    }
  
     def __init__(self, rss_url):
         self.url = rss_url

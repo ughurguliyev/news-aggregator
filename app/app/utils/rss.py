@@ -5,11 +5,12 @@ class ReadRss:
     """
         Read Rss from given source
     """
+    headers = {"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"}
  
     def __init__(self, rss_url):
         self.url = rss_url
         try:
-            self.r = requests.get(rss_url)
+            self.r = requests.get(rss_url, headers=self.headers)
             self.status_code = self.r.status_code
         except Exception as e:
             print('Error fetching the URL: ', rss_url)

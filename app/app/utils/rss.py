@@ -21,7 +21,8 @@ class ReadRss:
             'title': article.title.text, 
             'link': article.link.text,
             'description': article.description.text,
-            'pub_date': article.pubDate.text} 
+            'content': article.find('content:encoded').text,
+            'pub_date': article.pubDate.text}
             for article in self.articles
         ]
         self.descriptions = [d['description'] for d in self.articles_dicts if 'description' in d]

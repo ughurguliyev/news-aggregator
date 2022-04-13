@@ -35,10 +35,10 @@ class Repository:
             return True
         return False
     
-    def check_trends(self, description: str, trends_arr: list) -> None:
+    def check_trends(self, content: str, trends_arr: list) -> None:
         for trend in trends_arr:
             trend_name = unicodedata.normalize("NFKD", trend)
-            if trend_name.lower() in description.lower():
+            if trend_name.lower() in content.lower():
                 return (True, trend_name)
         return (False, None)
         
@@ -51,7 +51,7 @@ class Repository:
             is_news_created = self.is_news_created(article['link'])
 
             if is_news_created is False:
-                is_trend, trend_name = self.check_trends(article['description'], trends_arr)
+                is_trend, trend_name = self.check_trends(article['content'], trends_arr)
                 if is_trend:
                     news = News.objects.create(
                         headline=article['title'],

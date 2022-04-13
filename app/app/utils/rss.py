@@ -6,8 +6,7 @@ class ReadRss:
         Read Rss from given source
     """
     headers = {
-        "Cookie": "__cf_bm=9p8aqTL_yLYxRe3E6mvwiAODHkzGpfqWZMV3QIn5nUs-1649841442-0-AfBF6eSjtXLE0gEicq9P47Mg+hW7ayhWo25d5MVvDOnn2TB/kCnBZnS3qRUTIOZA8xxZ2LDCxJjLMJrBHZ4Z6QM=",
-        "User-Agent":"PostmanRuntime/7.29.0",
+        "User-Agent": "Mozilla/5.0",
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
@@ -16,7 +15,8 @@ class ReadRss:
     def __init__(self, rss_url):
         self.url = rss_url
         try:
-            self.r = requests.get(rss_url, headers=self.headers)
+            self.session = requests.Session()
+            self.r = self.session.get(rss_url, headers=self.headers)
             self.status_code = self.r.status_code
         except Exception as e:
             print('Error fetching the URL: ', rss_url)
